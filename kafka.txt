@@ -1,0 +1,17 @@
+//run zookeeper instance
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+//run kafka instance
+bin/kafka-server-start.sh config/server.properties
+
+//list all topics present in kafka
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+
+//create a topic with name 'sampleTopic' with given replication factor and partitions
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic sampleTopic
+
+//console based producer to push message on a kafka topic
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic sampleTopic
+
+//console based consumer to consume/acknowledge message from a kafka topic
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic truck_events --from-beginning
